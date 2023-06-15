@@ -14,11 +14,26 @@ const Container = styled.div`
 
 `;
 
+const ErrorMassage = styled.div`
+  color:red;
+  font-size:0.8ren;
+`;
+
 const InputGroup = ({label,name,value,placeholder,error,onChange,onFocus,onBlur}) => {
   return (
     <Container>
       <Label htmlFor={name}>{label}</Label>
-      <TextInput name={name} id={name} placeholder={placeholder ?? ''}/>
+      <TextInput  
+      name={name} 
+      value={value} 
+      onChange={onChange} 
+      onFocus={onFocus} 
+      onBlur={onBlur}
+       id={name} 
+       placeholder={placeholder ?? ''}
+       error={error}
+       />
+      {error && <ErrorMassage>{error}</ErrorMassage>}
     </Container>
   )
 }

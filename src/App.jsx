@@ -10,7 +10,12 @@ const init ={
 
 const App = () => {
   const [values,setValues] = useState({...init});
-  const [erros,setErros] = useState({...init});
+  const [errors,setErros] = useState({...init});
+  const [focuses,setFocuses]= useState({
+    title: false,
+    bio:false,
+    skills:false,
+  })
 
 
 
@@ -27,18 +32,45 @@ const App = () => {
   const {isvalid,errors} = checkValidity (values)
   if(isvalid){
     console.log(values);
+    setErros({...errors})
   }else{
-    console.log(errors);
+    setErros({...errors})
   }
  }
 
+
+ const handleFocus = (e) =>{
+  setFocuses((prev) => ({
+    ...prev,
+    [e.target.name]:true
+  })   )
+ }
+
+ const handleBlur = (e) =>{
+   const key = e.target.name
+    const {errors} = checkValidity(values)
+    if(errors[key] && focuses[key] === true){
+      setErros((prev) => ({
+        ...prev,
+        [key]:errors[key],
+      }));
+    }
+    else{
+      setErros((prev) => ({
+        ...prev,
+        [key]:'',
+      }));
+
+    }
+      
+ }
 
  const checkValidity = () =>{
        const errors = {}
 
        const {title,bio,skills} = values
        if(!title){
-        errors.title= "invalid Tilte"
+        errors.title = "invalid Tilte"
        }
        if(!bio){
         errors.bio= "invalid Bio"
@@ -64,6 +96,9 @@ const App = () => {
           name={'title'}
           placeholder={'enter your title'}
           onChange={handleChange}
+          error={errors.title}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
 
         <InputGroup 
@@ -72,6 +107,9 @@ const App = () => {
           name={'bio'}
           placeholder={'enter your bio'}
           onChange={handleChange}
+          error={errors.bio}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
 
         <InputGroup 
@@ -80,6 +118,9 @@ const App = () => {
           name={'skills'}
           placeholder={'React,javascript,css'}
           onChange={handleChange}
+          error={errors.skills}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />  
 
         <button type='submit' >submit</button>
