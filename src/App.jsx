@@ -9,12 +9,13 @@ const init ={
 }
 
 const App = () => {
-  const [formState,setFormState] = useState({...init});
+  const [values,setValues] = useState({...init});
+  const [erros,setErros] = useState({...init});
 
 
 
  const handleChange = (e) =>{
-  setFormState(prev =>({
+  setValues(prev =>({
     ...prev,
       [e.target.name]:e.target.value
   }))
@@ -23,7 +24,33 @@ const App = () => {
 
  const handleSubmit = e =>{
     e.preventDefault()
-    console.log(formState);
+  const {isvalid,errors} = checkValidity (values)
+  if(isvalid){
+    console.log(values);
+  }else{
+    console.log(errors);
+  }
+ }
+
+
+ const checkValidity = () =>{
+       const errors = {}
+
+       const {title,bio,skills} = values
+       if(!title){
+        errors.title= "invalid Tilte"
+       }
+       if(!bio){
+        errors.bio= "invalid Bio"
+       }
+       if(!skills){
+        errors.skills= "invalid Skills"
+       }
+
+       return{
+        errors,
+        isvalid: Object.keys(errors).length === 0,
+       }
 
  }
 
@@ -32,7 +59,7 @@ const App = () => {
 
       <form onSubmit={handleSubmit}>
         <InputGroup 
-          value={formState.title}
+          value={setValues.title}
           label={'Title'}
           name={'title'}
           placeholder={'enter your title'}
@@ -40,7 +67,7 @@ const App = () => {
         />
 
         <InputGroup 
-          value={formState.bio}
+          value={setValues.bio}
           label={'Bio'}
           name={'bio'}
           placeholder={'enter your bio'}
@@ -48,7 +75,7 @@ const App = () => {
         />
 
         <InputGroup 
-          value={formState.skills}
+          value={setValues.skills}
           label={'Skills'}
           name={'skills'}
           placeholder={'React,javascript,css'}
