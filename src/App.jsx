@@ -6,9 +6,6 @@ const App = () =>{
 
     const {formState} = useFrom ({
         init : {
-            name : 'hello ps',
-            email : '',
-            password :'',
         }
     })
 

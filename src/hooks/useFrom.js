@@ -120,7 +120,15 @@ const useFrom = ({init,validate}) => {
       errors,
       hasError
     }
- }
+ };
+
+const clear = () =>{
+  const newState = mapValuesToState(init,true)
+  setState(newState);
+
+}
+
+
   
 
 
@@ -163,6 +171,7 @@ const useFrom = ({init,validate}) => {
     handleSubmit,
     handleBlur,
     handleFocus,
+    clear,
   
   }
     
@@ -172,12 +181,12 @@ const useFrom = ({init,validate}) => {
 export default useFrom
 
 
-const mapValuesToState = () =>{
+const mapValuesToState = (values,shouldClear = false) =>{
   return Object.keys(values).reduce((acc,key)=>{
 
 
     acc[key] = {
-      value:values[key],
+      value:shouldClear ? '' : values[key],
       error : '',
       focusd : false,
       touched : false,
@@ -186,7 +195,7 @@ const mapValuesToState = () =>{
 
     return acc
 
-  },{})
+  },{});
 }
 
 
