@@ -39,10 +39,16 @@ const App = () =>{
         clear
     } = useFrom({init,validate});
 
-   
+   const cb = ({hasError,values,errors}) =>{
+        if(hasError){
+            alert("[ERROR]" + JSON.stringify(errors))
+        }else{
+            alert("[SUCCES]" + JSON.stringify(values))
+        }
+   }
     return (
         <div>
-            <form>
+            <form onSubmit={(e)=>handleSubmit(e,cb)}>
             <h1>my custom hooks from</h1>
         <InputGroup 
           value={state.firstName.value}
@@ -89,6 +95,12 @@ const App = () =>{
           onFocus={handleFocus}
           onBlur={handleBlur}
           />     
+
+          <div>
+            <button type= 'submit' >submit</button>
+            <button type='reset' onClick={clear} >clear</button>
+
+          </div>
           </form>       
         </div>
     )

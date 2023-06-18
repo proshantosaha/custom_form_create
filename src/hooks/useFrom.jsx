@@ -91,7 +91,7 @@ const useFrom = ({init, validate}) => {
     let hasError = null,
     errors = null;
   
-    const values = mapStateTokeys(state,'values');
+    const values = mapStateTokeys(state,'value');
   
   
    if(typeof validate === 'boolean'){
