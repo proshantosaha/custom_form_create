@@ -6,9 +6,20 @@ const useFrom = ({init, validate}) => {
   const [state,setState] = useState(mapValuesToState(init));
 
   const handleChange = (e) =>{
-    const {name:key,value} = e.target;
+    const {name:key,value,type,checked} = e.target;
     const oldState =  deepClone(state)
-    oldState[key].value = value;
+  
+
+     if(type === 'checkbox'){
+      oldState[key].value = checked;
+
+     }else{
+      oldState[key].value = value;
+
+     }
+ 
+
+   
 
     const {errors}= getErrors();
     if(oldState[key].touched && errors[key]){
@@ -18,7 +29,7 @@ const useFrom = ({init, validate}) => {
       oldState[key].error = '';
     }
     setState(oldState);
-    } ;
+  } ;
 
 
 

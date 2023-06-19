@@ -1,5 +1,6 @@
 import useFrom from './hooks/useFrom'
 import InputGroup from './components/shared/forms/inputGroup'
+import Task from './components/task/Task';
 
 const init = {
     firstName : '',
@@ -21,6 +22,8 @@ const init = {
     }
      if (!values.password){
         errors.password = 'password is required'
+    }else if(values.password.length <6){
+        errors.password = 'password length must be 6 character'
     }
 
 
@@ -78,7 +81,7 @@ const App = () =>{
           value={state.email.value}
           label={'Email:'}
           name={'email'}
-          placeholder={'email'}
+          placeholder={'text@gmail.com'}
           onChange={handleChange}
           error={state.email.error}
           onFocus={handleFocus}
@@ -89,7 +92,7 @@ const App = () =>{
           value={state.password.value}
           label={'Password:'}
           name={'password'}
-          placeholder={'password'}
+          placeholder={'**************'}
           onChange={handleChange}
           error={state.password.error}
           onFocus={handleFocus}
@@ -101,7 +104,11 @@ const App = () =>{
             <button type='reset' onClick={clear} >clear</button>
 
           </div>
-          </form>       
+          </form>      
+
+          <hr/> 
+
+          <Task/>
         </div>
     )
 
